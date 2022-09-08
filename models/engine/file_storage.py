@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+from tkinter.messagebox import NO
 
 
 class FileStorage:
@@ -10,7 +11,13 @@ class FileStorage:
 
     def all(self):
         """Returns a dictionary of models currently in storage"""
-        return FileStorage.__objects
+        if cls is not None:
+            new_list = {}
+            for key, value in self.__objects.items():
+                if isinstance(value, cls):
+                    new_list.update({key: value})
+            return new_list
+        return self.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -48,3 +55,10 @@ class FileStorage:
                         self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
+
+    def delete(self, obj=None):
+        """ deletes an object if is not None"""
+        if obj is not None:
+            name = obj.__class__.__name__ + '.' + obj.id
+            if name in self.__objects:
+                del self.__objects[name]
