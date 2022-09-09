@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ This module defines a class to manage data base storage for hbnb clone"""
 
-from curses.ascii import US
 from os import getenv
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import Session
@@ -17,9 +16,8 @@ class DBStorage:
         user = getenv('HBNB_MYSQL_USER')
         pwd = getenv('HBNB_MYSQL_PWD')
         host = getenv('HBNB_MYSQL_HOST')
-        datebase = getenv('HBNB_MYSQL_DB')
-        self.__engine = create_engine(
-            "mysql+mysqldb://{}:{}@{}:{}".format(user, pwd, host, datebase), pool_pre_ping=True)
+        database = getenv('HBNB_MYSQL_DB')
+        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format(user, pwd, host, database), pool_pre_ping=True)
         metadata = MetaData()
         if getenv('HBNB_ENV') == 'test':
             metadata.drop_all()
@@ -29,21 +27,23 @@ class DBStorage:
         self.__session = Session(self.__engine)
         my_dict = dict()
         if cls == None:
-            from models.amenity import Amenity
+            #from models.amenity import Amenity
             from models.city import City
-            from models.place import Place
-            from models.review import Review
+            #from models.place import Place
+            #from models.review import Review
             from models.state import State
-            from models.user import User
+            #from models.user import User
 
-            list_cls = [Amenity, City, Place, Review, State, User]
-            for querry_cls in list_cls:
-                for querry_cls in self.__session.query(cls).all():
+            #list_cls = [Amenity, City, Place, Review, State, User]
+            list_cls = [City, State]
+            for query_cls in list_cls:
+                for obj in self.__session.query(query_cls).all():
                     my_dict[obj.to_dict()['__class__'] + '.' + obj.id] = obj
 
         else:
             for obj in self.__session.query(cls).all():
                 my_dict[obj.to_dict()['__class__'] + '.' + obj.id] = obj
+        return my_dict
 
     def new(self, obj):
         """add the object to the current database session"""
