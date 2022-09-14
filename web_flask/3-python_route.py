@@ -2,6 +2,7 @@
 """ starts a Flask web application"""
 
 
+from email.policy import default
 from flask import Flask
 
 app = Flask(__name__)
@@ -27,11 +28,12 @@ def c_plus_text(text):
     return "C {}".format(my_text)
 
 
+@app.route("/python", defaults={'text': "is cool"})
 @app.route("/python/<text>")
 def python_text(text):
     """ display “Python ”, followed by the value of the text"""
-    my_text = text.replace("_", " ")
-    return "Python " + my_text
+    text = text.replace("_", " ")
+    return "Python {}".format(text)
 
 
 if __name__ == '__main__':
