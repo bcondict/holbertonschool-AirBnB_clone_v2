@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-from multiprocessing.sharedctypes import Value
 from models.base_model import BaseModel, Base
 from os import getenv
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 
