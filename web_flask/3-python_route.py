@@ -27,7 +27,7 @@ def c_plus_text(text):
     return "C {}".format(my_text)
 
 
-@app.route("/python/(<text>)")
+@app.route("/python/<text>")
 def python_text(text):
     """ display “Python ”, followed by the value of the text"""
     my_text = text.replace("_", " ")
