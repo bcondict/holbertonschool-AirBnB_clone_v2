@@ -13,5 +13,5 @@ class City(BaseModel, Base if (getenv("HBNB_TYPE_STORAGE") == "db") else object)
         name = Column(String(128), nullable=False)
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
     else:
-        state_id = ""
         name = ""
+        state_id = ""
