@@ -24,7 +24,7 @@ def HBNB():
 def c_plus_text(text):
     """ display “C ” followed by the value of the text """
     my_text = text.replace("_", " ")
-    return "c {}".format(my_text)
+    return "C {}".format(my_text)
 
 
 if __name__ == '__main__':
