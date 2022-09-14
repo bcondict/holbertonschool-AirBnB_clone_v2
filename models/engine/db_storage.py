@@ -30,12 +30,12 @@ class DBStorage:
             #from models.amenity import Amenity
             from models.city import City
             from models.place import Place
-            #from models.review import Review
+            from models.review import Review
             from models.state import State
             from models.user import User
 
             #list_cls = [Amenity, City, Place, Review, State, User]
-            list_cls = [City, State, User, Place]
+            list_cls = [City, State, User, Place, Review]
             for query_cls in list_cls:
                 for obj in self.__session.query(query_cls).all():
                     my_dict[obj.to_dict()['__class__'] + '.' + obj.id] = obj
