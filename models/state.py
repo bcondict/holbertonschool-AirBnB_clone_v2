@@ -6,7 +6,8 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 
-class State(BaseModel, Base if (getenv("HBNB_TYPE_STORAGE") == "db") else object):
+class State(BaseModel,
+            Base if (getenv("HBNB_TYPE_STORAGE") == "db") else object):
     """ State class """
     if (getenv("HBNB_TYPE_STORAGE") == "db"):
         __tablename__ = "states"
@@ -24,4 +25,3 @@ class State(BaseModel, Base if (getenv("HBNB_TYPE_STORAGE") == "db") else object
                 if value.__class__ == 'City' and self.id == value.state_id:
                     my_list.append(value)
             return my_list
-
