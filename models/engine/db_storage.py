@@ -17,7 +17,8 @@ class DBStorage:
         pwd = getenv('HBNB_MYSQL_PWD')
         host = getenv('HBNB_MYSQL_HOST')
         database = getenv('HBNB_MYSQL_DB')
-        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format(user, pwd, host, database), pool_pre_ping=True)
+        self.__engine = create_engine(
+            "mysql+mysqldb://{}:{}@{}/{}".format(user, pwd, host, database), pool_pre_ping=True)
         metadata = MetaData()
         if getenv('HBNB_ENV') == 'test':
             metadata.drop_all()
@@ -25,23 +26,25 @@ class DBStorage:
     def all(self, cls=None):
         """ return a dictionary of all classes"""
         self.__session = Session(self.__engine)
-        my_dict = dict()
-        if cls == None:
-            from models.amenity import Amenity
-            from models.city import City
-            from models.place import Place
-            from models.review import Review
-            from models.state import State
-            from models.user import User
+        my_dict = {}
 
-            list_cls = [Amenity, City, Place, Review, State, User]
-            for query_cls in list_cls:
-                if cls is None or cls is list_cls[query_cls] or cls is query_cls:
-                    objs = self.__session.query(query_cls).all()
-                    for obj in objs:
-                        key = obj.__class__.__name__ + '.' + obj.id
-                        my_dict[key] = obj
-        return my_dict
+        from models.amenity import Amenity
+        from models.city import City
+        from models.place import Place
+        from models.review import Review
+        from models.state import State
+        from models.user import User
+
+        #list_cls = [Amenity, City, Place, Review, State, User]
+        dict_cls = {"Amenity": Amenity, "City": City,
+                    "Place": Place, "Review": Review, "State": State, "User": User}
+        for query_cls in dict_cls:
+            if cls is None or cls is dict_cls[query_cls] or cls is query_cls:
+                objs = self.__session.query(dict_cls[query_cls]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    my_dict[key] = obj
+        return (my_dict)
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -72,6 +75,6 @@ class DBStorage:
         sc_session = scoped_session(my_session)
         self.__session = sc_session()
 
-    def close (self):
+    def close(self):
         """close the session"""
         self.__session.close()
