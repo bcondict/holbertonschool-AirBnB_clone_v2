@@ -27,7 +27,7 @@ class DBStorage:
         """ return a dictionary of all classes"""
         self.__session = Session(self.__engine)
         my_dict = dict()
-        if cls == None:
+        if cls is None:
             from models.amenity import Amenity
             from models.city import City
             from models.place import Place
