@@ -36,12 +36,11 @@ class DBStorage:
 
             list_cls = [Amenity, City, Place, Review, State, User]
             for query_cls in list_cls:
-                for obj in self.__session.query(query_cls).all():
-                    my_dict[obj.to_dict()['__class__'] + '.' + obj.id] = obj
-
-        else:
-            for obj in self.__session.query(cls).all():
-                my_dict[obj.to_dict()['__class__'] + '.' + obj.id] = obj
+                if cls is None or cls is list_cls[query_cls] or cls is query_cls:
+                    objs = self.__session.query(query_cls).all()
+                    for obj in objs:
+                        key = obj.__class__.__name__ + '.' + obj.id
+                        my_dict[key] = obj
         return my_dict
 
     def new(self, obj):
@@ -75,5 +74,4 @@ class DBStorage:
 
     def close (self):
         """close the session"""
-        self.reload()
         self.__session.close()
