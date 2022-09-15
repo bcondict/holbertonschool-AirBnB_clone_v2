@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>HBNB</title>
+    </head>
+    <body>
+        <h1>States</h1>
+        <ul>
+            {% for x in state_dict.values() %}
+            <li>State: {{ state_dict.id }}: <b>{{ state_dict.name }}</b></li>
+                {% for y in cities_dict%}
+                <li>City: {{ cities_dict.id }}: <b>{{ cities_dict.name }}</b></li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </body>
+</html>
