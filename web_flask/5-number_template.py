@@ -2,7 +2,6 @@
 """ starts a Flask web application"""
 
 
-from re import A
 from flask import Flask
 from flask import render_template
 
