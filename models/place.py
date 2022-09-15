@@ -29,7 +29,7 @@ class Place(BaseModel, Base if (getenv("HBNB_TYPE_STORAGE") == "db") else object
             nullable=False)
         )
         amenities = relationship(
-            'Amenity', secondary=place_amenity, viewonly=False)
+            'Amenity', secondary="place_amenity", viewonly=False)
     else:
         city_id = ""
         user_id = ""
