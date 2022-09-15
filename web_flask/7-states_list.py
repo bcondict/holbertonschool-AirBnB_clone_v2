@@ -20,7 +20,7 @@ def teardown_close(self):
 def states_list():
     """display html page"""
     my_dict = storage.all(State)
-    return render_template('7-states_list.html', my_dict=state_dict)
+    return render_template('7-states_list.html', state_dict=my_dict)
 
 
 if __name__ == '__main__':
