@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 from os import getenv
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import models
 
 
 class State(BaseModel,
@@ -20,9 +21,9 @@ class State(BaseModel,
         def cities(self):
             """ return a list of City instances"""
             from models import storage
-            from models import city
             my_list = []
-            for value in storage.all(city).values():
+            my_dict = models.storage.all(models.city.City)
+            for key, value in my_dict.items():
                 if value.__class__ == 'City' and self.id == value.state_id:
                     my_list.append(value)
             return my_list
